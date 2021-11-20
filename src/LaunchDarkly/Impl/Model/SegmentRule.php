@@ -27,6 +27,15 @@ class SegmentRule
         $this->_bucketBy = $bucketBy;
     }
 
+    public function to_object(): object
+    {
+        return json_decode(json_encode([
+            'clauses' => array_map(function ($v) { $v->toObject(); }, $this->_clauses),
+            'weight' => $this->_weight,
+            'bucketBy' => $this->_bucketBy,
+        ]));
+    }
+
     public static function getDecoder(): \Closure
     {
         return function (array $v) {

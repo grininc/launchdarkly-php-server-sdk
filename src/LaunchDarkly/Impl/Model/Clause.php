@@ -32,6 +32,16 @@ class Clause
         $this->_negate = $negate;
     }
 
+    public function to_object(): object
+    {
+        return json_decode(json_encode([
+            'attribute' => $this->_attribute,
+            'op' => $this->_op,
+            'values' => $this->_values,
+            'negate' => $this->_negate,
+        ]));
+    }
+
     /**
      * @psalm-return \Closure(mixed):self
      */
