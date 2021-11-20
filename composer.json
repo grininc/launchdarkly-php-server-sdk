@@ -1,11 +1,11 @@
 {
-    "name": "launchdarkly/server-sdk",
-    "description": "Official LaunchDarkly SDK for PHP",
+    "name": "grininc/launchdarkly-php-server-sdk",
+    "description": "GRIN Fork of the LaunchDarkly SDK for PHP",
     "keywords": [
         "launchdarkly",
         "launchdarkly php"
     ],
-    "homepage": "https://github.com/launchdarkly/php-server-sdk",
+    "homepage": "https://github.com/grininc/launchdarkly-php-server-sdk",
     "license": "Apache-2.0",
     "authors": [
         {
