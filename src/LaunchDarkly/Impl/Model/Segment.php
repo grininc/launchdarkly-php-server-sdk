@@ -47,7 +47,20 @@ class Segment
 
     public function to_object(): object
     {
-        json_decode(json_encode([
+        return json_decode(json_encode([
+            'key' => $this->_key,
+            'version' => $this->_version,
+            'included' => $this->_included,
+            'excluded' => $this->_excluded,
+            'salt' => $this->_salt,
+            array_map(function ($v) { $v->to_object(); }, $this->_rules),
+            'deleted' => $this->_deleted,
+        ]));
+    }
+
+    public function to_object(): object
+    {
+        return json_decode(json_encode([
             'key' => $this->_key,
             'version' => $this->_version,
             'included' => $this->_included,
