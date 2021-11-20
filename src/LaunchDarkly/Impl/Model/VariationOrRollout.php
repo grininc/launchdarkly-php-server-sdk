@@ -28,6 +28,14 @@ class VariationOrRollout
         $this->_rollout = $rollout;
     }
 
+    public function to_object(): object
+    {
+        return json_decode(json_encode([
+            'variation' => $this->_variation,
+            'rollout' => $this->getRollout() ? $this->getRollout()->to_object() : null,
+        ]));
+    }
+
     /**
      * @psalm-return \Closure(array):self
      */
@@ -37,7 +45,7 @@ class VariationOrRollout
             $decoder = Rollout::getDecoder();
             $variation = $v['variation'] ?? null;
             $rollout = isset($v['rollout']) ? $decoder($v['rollout']) : null;
-            
+
             return new VariationOrRollout($variation, $rollout);
         };
     }
@@ -79,7 +87,7 @@ class VariationOrRollout
     }
 
     public static function bucketUser(
-        LDUser $user, string $_key, 
+        LDUser $user, string $_key,
         string $attr, ?string $_salt,
         ?int $seed
     ): float

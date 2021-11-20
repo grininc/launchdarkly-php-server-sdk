@@ -23,8 +23,8 @@ class Rule extends VariationOrRollout
     private $_trackEvents;
 
     protected function __construct(
-        ?int $variation, ?Rollout $rollout, 
-        ?string $id, array $clauses, 
+        ?int $variation, ?Rollout $rollout,
+        ?string $id, array $clauses,
         bool $trackEvents)
     {
         parent::__construct($variation, $rollout);
@@ -33,6 +33,17 @@ class Rule extends VariationOrRollout
         $this->_trackEvents = $trackEvents;
     }
 
+    public function to_object(): object
+
+    {
+        return json_decode(json_encode([
+            'variation' => $this->getVariation(),
+            'id' => $this->getId(),
+            'rollout' => $this->getRollout() ? $this->getRollout()->to_object() : null,
+            'clauses' => array_map(function ($v) { return $v->to_object(); }, $this->_clauses),
+            'trackEvents' => $this->_trackEvents,
+        ]));
+    }
     public static function getDecoder(): \Closure
     {
         return function (array $v) {
@@ -60,7 +71,7 @@ class Rule extends VariationOrRollout
     {
         return $this->_id;
     }
-    
+
     /**
      * @return Clause[]
      */

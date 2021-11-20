@@ -22,6 +22,14 @@ class Prerequisite
         $this->_variation = $variation;
     }
 
+    public function to_object(): object
+    {
+        return json_decode(json_encode([
+            'key' => $this->_key,
+            'variation' => $this->_variation,
+        ]));
+    }
+
     public static function getDecoder(): \Closure
     {
         return function (array $v) {

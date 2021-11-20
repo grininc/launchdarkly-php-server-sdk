@@ -34,6 +34,16 @@ class Rollout
         $this->_seed = $seed;
     }
 
+    public function to_object(): object
+    {
+        return json_decode(json_encode([
+            'variations' => $this->_variations,
+            'bucketBy' => $this->_bucketBy,
+            'kind' => $this->_kind,
+            'seed' => $this->_seed,
+        ]));
+    }
+
     /**
      * @psalm-return \Closure(array):self
      */
@@ -43,7 +53,7 @@ class Rollout
             $decoder = WeightedVariation::getDecoder();
             $vars = array_map($decoder, $v['variations']);
             $bucket = $v['bucketBy'] ?? null;
-            
+
             return new Rollout($vars, $bucket, $v['kind'] ?? null, $v['seed'] ?? null);
         };
     }

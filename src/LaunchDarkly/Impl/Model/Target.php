@@ -22,6 +22,14 @@ class Target
         $this->_variation = $variation;
     }
 
+    public function to_object(): object
+    {
+        return json_decode(json_encode([
+            'values' => $this->_values,
+            'variation' => $this->_variation,
+        ]));
+    }
+
     public static function getDecoder(): \Closure
     {
         return function (array $v) {

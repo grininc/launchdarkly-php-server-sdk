@@ -89,6 +89,27 @@ class FeatureFlag
         $this->_clientSide = $clientSide;
     }
 
+    public function to_object(): object
+    {
+        return json_decode(json_encode([
+            'key' => $this->_key,
+            'version' => $this->_version,
+            'on' => $this->_on,
+            'prerequisites' => array_map(function ($v) { return $v->to_object(); }, $this->_prerequisites),
+            'salt' => $this->_salt,
+            'targets' => array_map(function ($v) { return $v->to_object(); }, $this->_targets),
+            'rules' => array_map(function ($v) { return $v->to_object(); }, $this->_rules),
+            'fallthrough' => $this->_fallthrough ? $this->_fallthrough->to_object() : null,
+            'offVariation' => $this->_offVariation,
+            'variations' => $this->_variations,
+            'deleted' => $this->_deleted,
+            'trackEvents' => $this->_trackEvents,
+            'trackEventsFallthrough' => $this->_trackEventsFallthrough,
+            'debugEventsUntilDate' => $this->_debugEventsUntilDate,
+            'clientSide' => $this->_clientSide,
+        ]));
+    }
+
     /**
      * @return \Closure
      *
@@ -216,7 +237,7 @@ class FeatureFlag
         }
         return $this->getVariation($this->_offVariation, $reason);
     }
-    
+
     private function getValueForVariationOrRollout(VariationOrRollout $r, LDUser $user, EvaluationReason $reason): EvaluationDetail
     {
         $rollout = $r->getRollout();
@@ -254,7 +275,7 @@ class FeatureFlag
     {
         return $this->_rules;
     }
-    
+
     public function isTrackEvents(): bool
     {
         return $this->_trackEvents;
