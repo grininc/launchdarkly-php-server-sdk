@@ -7,9 +7,6 @@ use LaunchDarkly\LDUser;
  * Internal data model class that describes a user segment.
  *
  * Application code should never need to reference the data model directly.
- *
- * @ignore
- * @internal
  */
 class Segment
 {

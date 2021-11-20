@@ -12,9 +12,6 @@ use LaunchDarkly\Impl\Events\EventFactory;
  * Internal data model class that describes a feature flag configuration.
  *
  * Application code should never need to reference the data model directly.
- *
- * @ignore
- * @internal
  */
 class FeatureFlag
 {
